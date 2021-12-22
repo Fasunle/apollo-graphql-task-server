@@ -1,14 +1,10 @@
 const { ApolloServer, gql } = require("apollo-server");
 const mongoose = require("mongoose");
 require("dotenv").config();
+//
 const { MONGODB_URI, SERVER_PORT } = require("./utils/variables");
-
-const typeDefs = gql`
-  type Query {
-    greetings: String
-  }
-`;
-const resolvers = {};
+const resolvers = require("./api/graphql");
+const typeDefs = require("./api/graphql/typeDefs");
 
 // Apolloserver with dummy typeDefs and resolvers
 const server = new ApolloServer({ typeDefs, resolvers });
