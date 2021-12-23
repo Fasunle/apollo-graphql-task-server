@@ -1,3 +1,5 @@
-const me = () => "Kehinde";
+const createUser = (parent, { user }) => {
+  return { ...user, id: 2 };
+};
 
-module.exports = { me };
+module.exports = { createUser };

@@ -1,3 +1,3 @@
-const greetings = () => "Kehinde";
+// const greetings = () => "Kehinde";
 
-module.exports = { greetings };
+module.exports = {};
