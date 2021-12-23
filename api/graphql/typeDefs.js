@@ -6,7 +6,7 @@ module.exports = gql`
     getTasks: [TaskType!]
   }
   type Mutation {
-    createUser(user: UserInputType!): UserType!
+    signUpUser(user: UserInputType!): UserType!
     createTask(task: TaskInputType!): TaskType!
     loginUser(email: String!): UserType!
     logoutUser(email: String!): UserType!
