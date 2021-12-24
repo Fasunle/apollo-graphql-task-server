@@ -22,6 +22,7 @@ module.exports = gql`
     name: String!
     tasks: [String!]
     email: String!
+    token: String!
     id: ID!
   }
 
