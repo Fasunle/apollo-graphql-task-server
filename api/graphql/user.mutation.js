@@ -23,7 +23,7 @@ const signUpUser = async (parent, { user }) => {
   }
 };
 
-const loginUser = async (parent, { email, password }) => {
+const loginUser = async (parent, { email, password }, { req }) => {
   validateEmail(email);
   try {
     const user = await User.findOne({ email });
@@ -37,7 +37,9 @@ const loginUser = async (parent, { email, password }) => {
         throw new UserInputError("Email or password is wrong");
       }
       // add token to the user Object
-      user.token = generateToken(userData, password);
+      user.token = await generateToken(userData, password);
+      // save the token in the context req object
+      req.headers.authorization = `Bearer ${user.token}`;
       return user;
     }
     throw new UserInputError("User does not exist! try to signup");
