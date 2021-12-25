@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 //
 const { MONGODB_URI, SERVER_PORT } = require("./utils/variables");
+const { verifyUser } = require("./utils/context");
 const resolvers = require("./api/graphql");
 const typeDefs = require("./api/graphql/typeDefs");
 
@@ -12,7 +13,11 @@ const typeDefs = require("./api/graphql/typeDefs");
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context: ({ req }) => ({ req }),
+  context: ({ req }) => {
+    // verify if req.email exist or not
+    verifyUser(req);
+    return { email: req.email };
+  },
 });
 
 const dbConnect = async () => {
