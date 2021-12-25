@@ -9,7 +9,11 @@ const resolvers = require("./api/graphql");
 const typeDefs = require("./api/graphql/typeDefs");
 
 // Apolloserver with dummy typeDefs and resolvers
-const server = new ApolloServer({ typeDefs, resolvers });
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  context: ({ req }) => ({ req }),
+});
 
 const dbConnect = async () => {
   try {
