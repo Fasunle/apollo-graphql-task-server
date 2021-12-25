@@ -16,7 +16,10 @@ const signUpUser = async (parent, { user }) => {
     user.password = await bcrypt.hash(user.password, 10);
     const newUser = await User(user).save();
     // add token to the newUser Object
-    newUser.token = generateToken(userPayload, user.password);
+    newUser.token = generateToken(
+      userPayload,
+      process.env.TOKEN_SECRET || "you are a 419"
+    );
     return newUser;
   } catch (error) {
     console.error("Error occured ", error);
@@ -27,22 +30,25 @@ const loginUser = async (parent, { email, password }, { req }) => {
   validateEmail(email);
   try {
     const user = await User.findOne({ email });
-    if (user) {
-      const userData = {
-        name: user.name,
-        email: user.email,
-      };
-      const match = await bcrypt.compare(password, user.password);
-      if (!match) {
-        throw new UserInputError("Email or password is wrong");
-      }
-      // add token to the user Object
-      user.token = await generateToken(userData, password);
-      // save the token in the context req object
-      req.headers.authorization = `Bearer ${user.token}`;
-      return user;
+    // throw error if user doesn't exist
+    if (!user) {
+      throw new UserInputError("User does not exist! try to signup");
     }
-    throw new UserInputError("User does not exist! try to signup");
+    const userData = {
+      name: user.name,
+      email: user.email,
+    };
+    const match = await bcrypt.compare(password, user.password);
+    // throw if the password is wrong
+    if (!match) {
+      throw new UserInputError("Email or password is wrong");
+    }
+    // add token to the user Object
+    user.token = await generateToken(
+      userData,
+      process.env.TOKEN_SECRET || "you are a 419"
+    );
+    return user;
   } catch (error) {
     console.log("User does not exist!", error);
   }
