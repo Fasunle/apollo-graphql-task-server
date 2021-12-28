@@ -1,4 +1,5 @@
 const bcrypt = require("bcrypt");
+const { AuthenticationError } = require("apollo-server");
 const { validateUser, validateEmail } = require("./validators");
 const User = require("../../db/models/user");
 const { generateToken } = require("./utils");
@@ -32,7 +33,7 @@ const loginUser = async (parent, { email, password }, { req }) => {
     const user = await User.findOne({ email });
     // throw error if user doesn't exist
     if (!user) {
-      throw new UserInputError("User does not exist! try to signup");
+      throw new Error("User does not exist! try to signup");
     }
     const userData = {
       name: user.name,
@@ -50,7 +51,7 @@ const loginUser = async (parent, { email, password }, { req }) => {
     );
     return user;
   } catch (error) {
-    console.log("User does not exist!", error);
+    throw new AuthenticationError(error.message);
   }
 };
 
