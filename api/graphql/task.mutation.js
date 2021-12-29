@@ -6,13 +6,13 @@ const { isAuthenticated } = require("../../middleware");
 
 const createTask = combineResolvers(
   isAuthenticated,
-  async (parent, { task }, { email }) => {
+  async (parent, { task }, context) => {
     try {
       const user = await User.findOne({ email });
       if (!user) {
         throw new Error("Please signup and come back to create tasks");
       }
-      const newTask = await Task({ ...task, id: user.id });
+      const newTask = await Task({ ...task, createdBy: user.id });
       await newTask.save();
       return newTask;
     } catch (error) {
