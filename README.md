@@ -1,6 +1,6 @@
-# Apollo GraphQL Server {header}
+# Apollo GraphQL Server
 
-## Folder Structure {structure}
+## Folder Structure
 
 * api
   - task.mutation.js
@@ -18,7 +18,7 @@
 * middleware
 * utils/variables.js
 
-## Description {description}
+## Description 
 
 Apollo-graphql-task-server is a simple server that helps to create and manage tasks. Each tack therefore has a user and the user can perform CRUD operation on the server.
 
@@ -48,7 +48,7 @@ This include `isAuthenticated middleware` which enables only authenticated and a
 
 An application level utility folder.
 
-## How to use this app {how to}
+## How to use this app 
 
 You can use this server by firstly cloning this repository.
 
