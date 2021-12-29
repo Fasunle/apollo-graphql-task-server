@@ -6,7 +6,8 @@ const { isAuthenticated } = require("../../middleware");
 
 const createTask = combineResolvers(
   isAuthenticated,
-  async (parent, { task }, context) => {
+  async (parent, { task }, { req }) => {
+    const email = req.email;
     try {
       const user = await User.findOne({ email });
       if (!user) {
