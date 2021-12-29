@@ -27,6 +27,14 @@ const deleteTask = combineResolvers(
   async (_, { id }, { req }) => {
     const email = req.email;
     try {
+      // get user id
+      const user = await User.findOne({ email });
+
+      // check if user exist
+      if (!user) {
+        throw new Error("user does not exist!");
+      }
+
       // delete task with id specified
       const { deletedCount } = await Task.deleteOne({ id, createdBy: user.id });
 
