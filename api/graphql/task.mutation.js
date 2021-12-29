@@ -50,4 +50,28 @@ const deleteTask = combineResolvers(
   }
 );
 
-module.exports = { createTask, deleteTask };
+const updateTask = combineResolvers(
+  isAuthenticated,
+  async (_, { task_update }, { req }) => {
+    const email = req.email;
+    // desctructure task_update
+    const { id, title, description } = task_update;
+    try {
+      // get user id
+      const user = await User.findOne({ email });
+
+      // check if user exist
+      if (!user) {
+        throw new Error("user does not exist!");
+      }
+
+      // update task with id specified
+      await Task.updateMany({ _id: id }, { description, title });
+      return id;
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
+);
+
+module.exports = { createTask, deleteTask, updateTask };
