@@ -24,7 +24,7 @@ Apollo-graphql-task-server is a simple server that helps to create and manage ta
 
 A user is provided an authentication token which will expire in 24 hours. The Users task is persisted and uses NoSQL database(mongo)
 
-## Decision {decision}
+## Decision
 
 `api/graphql`
 
@@ -54,7 +54,7 @@ You can use this server by firstly cloning this repository.
 
 - create a folder where you would clone this repo into
 - cd into the folder. For example, `cd server`
-- execute `git clone 'https://github.com/Fasunle/apollo-graphql-server.git' .`
+- execute `git clone 'https://github.com/Fasunle/apollo-graphql-task-server.git' .`
 - once completed, execute `yarn` or `npm i`
 - update the .env file with the .env.example file.
 - start your development server by executing `yarn dev` or production server by `yarn start`
