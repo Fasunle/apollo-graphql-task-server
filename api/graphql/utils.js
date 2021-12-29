@@ -1,3 +1,4 @@
+const { AuthenticationError } = require("apollo-server");
 const jsonwebtoken = require("jsonwebtoken");
 
 exports.generateToken = async (payload, secret) => {
@@ -7,6 +8,6 @@ exports.generateToken = async (payload, secret) => {
     });
     return token;
   } catch (error) {
-    console.log(error);
+    throw new AuthenticationError(error.message);
   }
 };
