@@ -58,7 +58,7 @@ const updateTask = combineResolvers(
     const { id, title, description } = task_update;
     try {
       // update task with id specified
-      await Task.updateMany({ _id: id }, { description, title });
+      await Task.updateOne({ _id: id }, { description, title });
       return id;
     } catch (error) {
       throw new Error(error.message);
