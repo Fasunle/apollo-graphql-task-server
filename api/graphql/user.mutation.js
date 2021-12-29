@@ -6,9 +6,9 @@ const { generateToken } = require("./utils");
 
 const signUpUser = async (parent, { user }) => {
   // validate user input
-  const { valid } = validateUser(user);
+  validateUser(user);
   // sign up the user
-  const userPayload = { email: user.email, name: user.name };
+  const userPayload = { email: user.email };
   try {
     const found = await User.findOne({ email: user.email });
     if (found) {
@@ -16,18 +16,17 @@ const signUpUser = async (parent, { user }) => {
     }
     user.password = await bcrypt.hash(user.password, 10);
     const newUser = await User(user).save();
-    // add token to the newUser Object
-    newUser.token = generateToken(
+    token = generateToken(
       userPayload,
       process.env.TOKEN_SECRET || "you are a 419"
     );
-    return newUser;
+    return { token };
   } catch (error) {
-    console.error("Error occured ", error);
+    throw new Error(error.message);
   }
 };
 
-const loginUser = async (parent, { email, password }, { req }) => {
+const loginUser = async (parent, { email, password }) => {
   validateEmail(email);
   try {
     const user = await User.findOne({ email });
@@ -35,21 +34,18 @@ const loginUser = async (parent, { email, password }, { req }) => {
     if (!user) {
       throw new Error("User does not exist! try to signup");
     }
-    const userData = {
-      name: user.name,
-      email: user.email,
-    };
+
     const match = await bcrypt.compare(password, user.password);
     // throw if the password is wrong
     if (!match) {
       throw new UserInputError("Email or password is wrong");
     }
     // add token to the user Object
-    user.token = await generateToken(
-      userData,
+    const token = await generateToken(
+      { email: user.email },
       process.env.TOKEN_SECRET || "you are a 419"
     );
-    return user;
+    return { token };
   } catch (error) {
     throw new AuthenticationError(error.message);
   }
