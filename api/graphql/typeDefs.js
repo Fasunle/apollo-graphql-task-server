@@ -7,6 +7,7 @@ module.exports = gql`
   }
   type Mutation {
     createTask(task: TaskInputType!): TaskType!
+    deleteTask(id: String!): String
     loginUser(email: String!, password: String!): TokenType
     #nullable because if the user exist, we return null
     signUpUser(user: UserInputType!): TokenType

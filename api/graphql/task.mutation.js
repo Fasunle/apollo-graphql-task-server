@@ -22,8 +22,32 @@ const createTask = combineResolvers(
   }
 );
 
-const deleteTask = (id) => {
-  return id;
-};
+const deleteTask = combineResolvers(
+  isAuthenticated,
+  async (_, { id }, { req }) => {
+    const email = req.email;
+    try {
+      // get user id
+      const user = await User.findOne({ email });
 
-module.exports = { createTask };
+      // check if user exist
+      if (!user) {
+        throw new Error("user does not exist!");
+      }
+
+      // delete task with id specified
+      const { deletedCount } = await Task.deleteOne({ id, createdBy: user.id });
+
+      // return id if deletion was successful
+      if (deletedCount > 0) {
+        return id;
+      } else {
+        return null;
+      }
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
+);
+
+module.exports = { createTask, deleteTask };
