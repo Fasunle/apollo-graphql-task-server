@@ -57,14 +57,6 @@ const updateTask = combineResolvers(
     // desctructure task_update
     const { id, title, description } = task_update;
     try {
-      // get user id
-      const user = await User.findOne({ email });
-
-      // check if user exist
-      if (!user) {
-        throw new Error("user does not exist!");
-      }
-
       // update task with id specified
       await Task.updateMany({ _id: id }, { description, title });
       return id;
