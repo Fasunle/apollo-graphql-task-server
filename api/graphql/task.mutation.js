@@ -27,14 +27,6 @@ const deleteTask = combineResolvers(
   async (_, { id }, { req }) => {
     const email = req.email;
     try {
-      // get user id
-      const user = await User.findOne({ email });
-
-      // check if user exist
-      if (!user) {
-        throw new Error("user does not exist!");
-      }
-
       // delete task with id specified
       const { deletedCount } = await Task.deleteOne({ id, createdBy: user.id });
 
@@ -57,14 +49,6 @@ const updateTask = combineResolvers(
     // desctructure task_update
     const { id, title, description } = task_update;
     try {
-      // get user id
-      const user = await User.findOne({ email });
-
-      // check if user exist
-      if (!user) {
-        throw new Error("user does not exist!");
-      }
-
       // update task with id specified
       await Task.updateMany({ _id: id }, { description, title });
       return id;
