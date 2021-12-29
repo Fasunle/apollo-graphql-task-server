@@ -18,11 +18,11 @@
 * middleware
 * utils/variables.js
 
-## Description 
+## Description
 
 Apollo-graphql-task-server is a simple server that helps to create and manage tasks. Each tack therefore has a user and the user can perform CRUD operation on the server.
 
-A user is provided an authentication token which will expire in 24 hours. The Users task is persisted and uses NoSQL database(mongo)
+A user is provided an authentication token which will expire in 24 hours. The Users task is persisted and uses NoSQL database (mongo)
 
 ## Decision
 
@@ -30,7 +30,7 @@ A user is provided an authentication token which will expire in 24 hours. The Us
 
 This folder containts all graphql related tasks like user and task mutations as well as queries, with `typeDefs`
 
-This is done so as to have modularity which support extension. If `REST` api needs to be used with the graphql api, there will be no complexity in managing the two different protocols.
+This is done so as to have modularity which support extensibility. If `REST API`  needs to be used with the `graphql API ` in future, there will be no complexity in managing the two different protocols.
 
 `file naming convention`
 
@@ -48,13 +48,14 @@ This include `isAuthenticated middleware` which enables only authenticated and a
 
 An application level utility folder.
 
-## How to use this app 
+## How to use this app
 
 You can use this server by firstly cloning this repository.
 
 - create a folder where you would clone this repo into
 - cd into the folder. For example, `cd server`
-- execute `git clone 'https://github.com/Fasunle/apollo-graphql-task-server.git' .`
+- execute ` git clone 'https://github.com/Fasunle/apollo-graphql-task-server.git' `
 - once completed, execute `yarn` or `npm i`
 - update the .env file with the .env.example file.
 - start your development server by executing `yarn dev` or production server by `yarn start`
+- The server should start immediately, once the server connect to your database successfully.
